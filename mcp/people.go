@@ -15,7 +15,7 @@ type ListPeopleInput struct {
 	Stage     string `json:"stage,omitempty" jsonschema:"description=Stage name (e.g. Lead Trash)"`
 	Tags      string `json:"tags,omitempty" jsonschema:"description=Comma-separated tags; matches any"`
 	Sort      string `json:"sort,omitempty" jsonschema:"description=Sort order (default created)"`
-	Fields    string `json:"fields,omitempty" jsonschema:"description=Comma-separated fields or allFields"`
+	Fields    string `json:"fields,omitempty" jsonschema:"description=Comma-separated projection fields (e.g. emails phones firstName lastName stage tags allFields). NOTE email/phone are SEARCH-only top-level filters use the email/phone params for those not here"`
 	Limit     int    `json:"limit,omitempty" jsonschema:"description=Max results 1-100,minimum=1,maximum=100"`
 	Offset    int    `json:"offset,omitempty" jsonschema:"description=Rows to skip,minimum=0"`
 }
@@ -37,7 +37,7 @@ func listPeople(ctx context.Context, c *followupboss.Client, in ListPeopleInput)
 // GetPersonInput is the typed input for followupboss_get_person.
 type GetPersonInput struct {
 	ID     int    `json:"id" jsonschema:"description=Person ID,required"`
-	Fields string `json:"fields,omitempty" jsonschema:"description=Comma-separated fields or allFields"`
+	Fields string `json:"fields,omitempty" jsonschema:"description=Comma-separated projection fields (e.g. emails phones firstName lastName stage tags allFields). NOTE email/phone are SEARCH-only filters not projection names"`
 }
 
 func getPerson(ctx context.Context, c *followupboss.Client, in GetPersonInput) (any, error) {
