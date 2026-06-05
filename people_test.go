@@ -16,6 +16,12 @@ func TestNormalizeFields(t *testing.T) {
 		{"already plural untouched", "emails,phones", "emails,phones"},
 		{"trims whitespace", " email , phone , stage ", "emails,phones,stage"},
 		{"allFields untouched", "allFields", "allFields"},
+		{"case variant Email", "Email", "emails"},
+		{"case variant PHONE", "PHONE", "phones"},
+		{"mixed case variants", "Email,PHONE", "emails,phones"},
+		{"empty inner token", "email,,phone", "emails,phones"},
+		{"trailing empty token", "email,", "emails"},
+		{"case-sensitive projection preserved", "firstName,Email", "firstName,emails"},
 	}
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {

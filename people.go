@@ -18,17 +18,22 @@ func normalizeFields(fields string) string {
 		return ""
 	}
 	parts := strings.Split(fields, ",")
-	for i, p := range parts {
-		switch strings.TrimSpace(p) {
+	out := make([]string, 0, len(parts))
+	for _, p := range parts {
+		t := strings.TrimSpace(p)
+		if t == "" {
+			continue
+		}
+		switch strings.ToLower(t) {
 		case "email":
-			parts[i] = "emails"
+			out = append(out, "emails")
 		case "phone":
-			parts[i] = "phones"
+			out = append(out, "phones")
 		default:
-			parts[i] = strings.TrimSpace(p)
+			out = append(out, t)
 		}
 	}
-	return strings.Join(parts, ",")
+	return strings.Join(out, ",")
 }
 
 // PeopleQuery filters GET /people. Zero-valued fields are omitted.
